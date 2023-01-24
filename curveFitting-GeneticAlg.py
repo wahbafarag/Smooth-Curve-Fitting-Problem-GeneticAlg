@@ -1,8 +1,3 @@
-# Reem Ali Abdelrahman (20198043)
-# Fatma Mohammed Abdelgafour Okasha (20198064)
-# Nehal Hamamam Hassan  (20198090)
-# Wahby  Mustafa Ebrahim  (20198098)
-
 from random import *
 import matplotlib.pyplot as plt
 import numpy as np
