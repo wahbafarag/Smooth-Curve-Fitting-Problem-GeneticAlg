@@ -4,29 +4,16 @@ import numpy as np
 import random as rand
 import pandas as pd
 def solve(n_points,Degree,items_x_y):
-    # print("Iam in solve function ")
+    
     Population = []
-    NumOfPopulation = 4
-    #################Representation########################################
-    print("########OUR Population#######################")
-    pop = PopGenerate(Degree,NumOfPopulation)
-    print(pop)
-    print("##############OUR fitness####################################")
-    fit = FitnessCalc(pop,items_x_y,Degree, n_points)
-    print(fit)
-    print("##############Selection ####################################")
+    NumOfPopulation = 4  
+    pop = PopGenerate(Degree,NumOfPopulation)    
+    fit = FitnessCalc(pop,items_x_y,Degree, n_points)   
     selected = selection(fit, pop)
-    print("hello from selected pop", selected)
-    print("#####################Cross over#############################################")
     offspring = crossover(selected,Degree)
-    print(offspring)
-    print("########Nonunifrom Mutation#################################################################################")
     mutattion_list = nonunifrom_mutation(offspring)
-    print(mutattion_list)
-    print("###########replacemnt#########################")
     print(replacement(fit,pop,Degree,NumOfPopulation,items_x_y,n_points))
-    # print(mutattion_list)
-    print("###############output##########################")
+    
     print(display_output(pop,items_x_y,Degree,n_points),)
     return []
 
@@ -41,8 +28,7 @@ def read_test_case(file):
         for i in range(2):
             item[i] = float(item[i])
         items_x_y.append(item)
-    # print("items", items_x_y)
-    # print( "length of itmes =", len(items_x_y))
+    
     return [n_points, Degree, items_x_y]
 
 
@@ -173,15 +159,13 @@ def selection(fit, pop):
 
     selectedIndcies = [ftRand, tdRand]
 
-    # print("##########")
-    # print(selectedPop)
-    # print("##########")
+   
     return selectedPop
 
 
 def crossover(Population,Degree):
     csRate = rand.uniform(0, 1)
-    # print(Population[0], Population[1])
+   
 
     if csRate >= 0.07:
 
@@ -192,11 +176,9 @@ def crossover(Population,Degree):
 
             if secPoint >= ftPoint:
                 secPoint == ftPoint, ftPoint == secPoint
-
-                # print("Cs Points is --- : ", ftPoint, secPoint)
+          
                 tmp1 = Population[0][ftPoint:secPoint]
-                tmp2 = Population[1][ftPoint:secPoint]
-                # print(tmp1, tmp2)
+                tmp2 = Population[1][ftPoint:secPoint]          
 
                 tmp3 = Population[0][secPoint:]
                 tmp4 = Population[1][secPoint:]
@@ -207,7 +189,7 @@ def crossover(Population,Degree):
                 Population[1].extend(tmp1)
                 Population[0].extend(tmp3)
                 Population[1].extend(tmp4)
-                # print("Cs is done : \n", Population[0], Population[1])
+                
                 return Population
 
             elif ftPoint > secPoint:
@@ -215,8 +197,7 @@ def crossover(Population,Degree):
                 x = ftPoint - secPoint
                 secPoint = secPoint + x
                 ftPoint = ftPoint - x
-
-                # print("Cs Points is --- : ", ftPoint, secPoint)
+              
                 tmp1 = Population[0][ftPoint:secPoint]
                 tmp2 = Population[1][ftPoint:secPoint]
                 print(tmp1, tmp2)
@@ -230,7 +211,7 @@ def crossover(Population,Degree):
                 Population[1].extend(tmp1)
                 Population[0].extend(tmp3)
                 Population[1].extend(tmp4)
-                # print("Cs is done :\n", Population[0], Population[1])
+                
                 return Population
             else:
                 crossover(Population,Degree)
@@ -239,7 +220,7 @@ def crossover(Population,Degree):
             crossover(Population,Degree)
 
     else:
-        # print("Cs had no place.")
+       
         return Population
 
 
@@ -371,37 +352,28 @@ def replacement (fit,pop,Degree,NumOfPopulation,items_x_y,n_points):
         population.append(NewPopulation[i])
     ##################Step 4 Remove-worst 2  from popualtion (higher fitness) index in dic map index of chromo in  population######
     FitnessOfNewPop = FitnessCalc(NewPopulation,items_x_y,Degree, n_points)
-    # print("--------fitness of new popualtion------- " ,"\n",FitnessOfNewPop)
-    #####Obtainging worst fitness#############################
     DicOfNewFitness = {}
     for i in range(len(NewPopulation)):
         for j in range(len(NewPopulation[i])):
             DicOfNewFitness[FitnessOfNewPop[i]] = i
     sort_data_new = sorted(nums.items(), reverse=True)
     sort_data_dict_new = dict(sort_data_new)
-    # print("new fitness of new popualtion  sorted by key ","\n", sort_data_dict_new)
-     ###############removing for these 2 worst fitness individual###############
+
     for key, value in sort_data_dict_new.items():
         NewPopulation.pop(value)
         if len(NewPopulation)==2:
             break
-    ############step (5)  Add temp to to population#####################################
 
     NewPopulation.append(temp)
-    # print("Result of function Replacement","\n",NewPopulation)
     return NewPopulation
 #
 
 def display_output(pop,items_x_y,Degree,n_points):
             idx=0
 
-            print("################hello from diaplayed output#################################")
             pop = PopGenerate( Degree, 4)
             f = open("output.txt", "w")
 
-            # while (idx != 5):
-            #     idx += 1
-            #     index = "dataset index = " f'{idx}'
             fit = FitnessCalc(pop, items_x_y, Degree, n_points)
             min_fit_value = min(fit);
             indexOfMinFit = fit.index(min_fit_value)
@@ -409,7 +381,7 @@ def display_output(pop,items_x_y,Degree,n_points):
             coefficient .append(pop[indexOfMinFit])
             mean_square_error = []
             mean_square_error.append(fit[indexOfMinFit])
-            # f.write(str(f'{idx}'))
+         
             f.write("\n coefficients =" + str(coefficient))
             f.write("\n mean square error = " + str(mean_square_error))
             f.close()
